@@ -1,0 +1,55 @@
+Model View Controller (MVC) 
+- The framework is an architectural/design pattern that segregates an application into three main logical components Model, View, Controller
+- It isolates the business logic and presentation layer from eachother
+- It supports Test Driven Development
+
+Components of MVC 
+1. Controller
+ - Handles request flow 
+ - Never handles data logic
+ - Model and view never interact with eachother, any interaction between the model and view are done through the controller 
+
+
+2. Model 
+  - This represent either the data that is being transferred between the view and controller components or any other business logic-related data
+  - Interacts with database
+
+3. View
+ - Handles data presentation
+ - Views are created by the data which is collected by the model component but these data aren't taken directly but through the controller
+ - Dynamically rendered
+
+Advantages
+- Codes are easy to maintain and they can be extended easily
+- The components of MVC can be developed simultaneously
+- The MVC model component can be tested separately
+
+Disadvantages
+- It is not suitable for building small applications
+- The inefficiency of data access in view
+
+Application Programming Interface (API) 
+- It is an interface that allows two systems to communicate with each other (share data and access resources)
+
+Working 
+- The client initiates the requests via the APIs URI
+- The API makes a call to the server after receiving the request 
+- Then the server sends the response back to the API with the information
+- Finally, the API transfers the data to the client 
+
+Advantages 
+- Flexible delivery of services 
+- Integration
+- Automation
+
+Disadvantages
+- Cost 
+
+Representational State Transfer (REST API) 
+- It is an architectural style that defines a set of contraints to be used for creating web services 
+- It is used to fetch or give some information from a web service 
+
+Working 
+- A request is sent from client to server in the form of a web URL as HTTP GET or POST or PUT or DELETE request 
+- A response comes back from the server in the form of a resource 
+- In HTTP there are five methods that are commonly used in REST-based Architecture i.e., POST, GET, PUT, PATCH, and DELETE
