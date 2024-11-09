@@ -53,3 +53,83 @@ Working
 - A request is sent from client to server in the form of a web URL as HTTP GET or POST or PUT or DELETE request 
 - A response comes back from the server in the form of a resource 
 - In HTTP there are five methods that are commonly used in REST-based Architecture i.e., POST, GET, PUT, PATCH, and DELETE
+
+HTTP Methods 
+- The HTTP specification includes a collection of methods that are used to interact with server-side resources
+- There are commonly referred to as HTTP request methods or HTTP verbs and are intended to cover all possible types of interaction with resources  
+
+Types 
+1.GET
+- The HTTP GET method is a type of HTTP request that is used to retrieve a representation of a resource from a server 
+- A HTTP request of this type is sent to retrieve data, and there is no message body included
+- The values are generally limited to 255 characters in length, and it only supports string data types 
+
+2.HEAD 
+- The HTTP HEAD method is a type of HTTP request that is identical to HTTP GET, except that the server will not return a message-body as part of the HTTP response 
+- It can be used to obtain metadata for the resource without having to consume the bandwidth required to download the message body 
+- This HTTP method can be used, for example, to test hyperlinks for validity and recent changes
+
+3. OPTIONS
+- The HTTP OPTIONS method is a type of HTTP request that is used to request information about the actions available for interacting with the target resource 
+- A HTTP request of this type is sent to determine the capabilities that the server has or what interaction is allowed with a specific resource, without having to commit to a particular action 
+
+4. TRACE 
+- The HTTP TRACE request method is used to determine what changes, if any, are made between the client and server in the HTTP request chain 
+- A HTTP request of this type is used for diagnostic purposes, and there is no message body. 
+- The final recipient in the path will echo the message that it received, excluding any fields that are likely to contain sensitive data 
+
+5. DELETE
+- The HTTP DELETE method is a type of HTTP request that is used to delete a resource from the server 
+- Precisely what happens on the server's side, such as whether the space is reclaimed or the resource is instead just taken offline, is under the control of the server, and how its environment has been configured
+
+6. PUT 
+- The HTTP PUT method is a type of HTTP request that creates or replaces a resource on the server with one that is included in the message body 
+- The server will verify the specified representation is compatible with the constraints that the server has in place. If the representation is not consistent then the server will either reconfigure or transform it appropriately, or return an appropriate and explanatory error message 
+
+7. POST 
+- The HTTP POST is a type of HTTP request that is used to send data to a server and is typically utilized for interacting with a specific resource 
+- The representation of the message body is indicated by the content-type header. Depending on its value, the server has different expectations as to how the message body is formatted 
+
+8. PATCH 
+- The HTTP PATCH method is a type of HTTP request that is used to modify a resource on the server 
+- When the HTTP PATCH method is called, the client instructs the server to make changes to the specified resource. If the resource does not exist then it can be created, depending on the server configuration
+
+9. CONNECT 
+- The HTTP CONNECT request method is used to set up two-way communication between the client and the resource on the origin server, through one or more proxy servers.
+- Once the HTTP connection is made, it is intended to be used for the forwarding of data packets in both directions 
+
+HTTP Status Codes 
+- A HTTP status code is a server response to a browser's request.
+
+Common HTTP status code classes
+1. 1xxs - Informational responses 
+- The server is thinking through the request 
+
+2. 2xxs - Success 
+- The request was successfully completed and the server gave the browser the expected response 
+
+3. 3xxs - Redirection 
+The request was received, but there's a redirect of some kind 
+
+4. 4xxs - Client errors
+- The request was made, but the page isn't valid - this is an error on the website's side of the conversation and often appears when a page doesn't exist on the site 
+
+5. 5xxs - Server errors 
+- A valid request was made by the client but the server failed to complete the request 
+
+Object Relational Mapping (ORM) 
+- Object-relational mapping is a technique that connects programming code with relational databases. It uses metadata descriptors to create a layer between object-oriented program code and the database 
+- It allows developers to perform CRUD opertions on databases without directly writing SQL code 
+- ORM provides a higher level of abstraction and encapsulation, enabling developers to work with databases using OOP principles
+
+Advantages 
+- Simplifies and abstracts data access 
+- Object-oriented programming paradigm
+- Portablity and cross-platform support 
+- Performance optimizations
+
+Disadvantages
+- Limited control over optimization 
+- Complex mapping
+- Increased resource usage 
+- Maintenance challenges 
