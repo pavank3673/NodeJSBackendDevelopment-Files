@@ -133,3 +133,187 @@ Disadvantages
 - Complex mapping
 - Increased resource usage 
 - Maintenance challenges 
+
+Sequelize 
+- Sequelize is a promise based Node.js ORM tool for Postgres, MySQL, MariaDB, SQLite, Microsoft SQL Server, Oracle Database, Amazon Redshift and Snowflake's Data Cloud.
+- It features solid transaction support, relations, eager and lazy loading, read replication and more 
+
+Model Querying Basics
+1. Simple insert queries 
+- const jane = await User.create({ firstName: 'Jane', lastName: 'Doe'});
+
+2. Simple select queries 
+- const users = await User.findAll();
+
+3. Specifying attributes for select queries
+- Model.findAll({
+  attributes :['foo','bar'],
+});
+
+4. Applying where clauses 
+- Post.findAll({
+  where : {
+    authorId : 2,
+  },
+});
+
+5. Operators 
+- Post.findAll({
+  where : {
+    [Op.and]: [{ a: 5 }, { b: 6 }],
+    [Op.or]: [{ a: 5 }, { b: 6 }],
+    someAttribute: {
+      [Op.eq]: 3,
+      [Op.ne]: 20,
+      [Op.is]: null,
+      [Op.not]: true,
+      [Op.or]: [5,6]
+    }
+  }
+});
+
+6. Logical combinations with operators
+- Foo.findAll({
+  where: {
+    rank: {
+      [Op.or]: {
+        [Op.lt]: 1000,
+        [Op.eq]: null
+      }
+    },
+    {
+      createdAt: {
+        [Op.lt]: new Date(),
+        [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
+      }
+    },
+    {
+      [Op.or]: [
+        {
+          title: {
+            [Op.like]: 'Boat%'
+          }
+        },
+        {
+          description: {
+            [Op.like]: '%boat%'
+          }
+        }
+      ]
+    }
+  }
+});
+
+7. Simple update queries
+- await User.update({
+  lastName: 'Doe' },
+  {
+    where: {
+      lastName: null,
+    },
+  },
+);
+
+8. Simple delete queries 
+- await User.destroy({
+  where: {
+    firstName: 'Jane',
+  },
+});
+
+9. Creating in bulk
+- const captians = await Captian.bulkCreate([{name: 'Jack Sparrow' }, {name: 'Davy Jones' }]);
+  console.log(captions.length); //2
+  console.log(captions[0] instanceof Captain); // true
+  console.log(captians[0].name); // 'Jack Sparrow'
+  console.log(captions[0].id); //1
+
+10. Ordering 
+- Subtask.findAll({
+  order: [
+    // Will escape title and validate DESC against a list of valid direction parameters
+    ['title','DESC'],
+    // Will order by max(age)
+    sequelize.fn('max',sequelize.col('age')),
+    // Will order by max(age) DESC  
+    [sequelize.fn('max',sequelize.col('age')),'DESC'],
+    // Will order by otherfunction('col1',12, 'lalala') DESC 
+    [sequelize.fn('otherfunction',sequelize.col('col1'),12,'lalala'),'DESC'],
+    // Will order an associated model's createdAt using the model name as the association's name 
+    [Task, 'createdAt','DESC'],
+    // Will order through an associated model's createdAt using the model names as the associations' names 
+    [Task, Project,'createdAt','DESC'],
+    // Will order by an associated model's createdAt using the name of the association 
+    ['Task','createdAt','DESC'],
+    // Will order by a nested associated model's createdAt using the names of the associations 
+    ['Task','Project','createdAt','DESC']
+    // Will order by an associated model's createdAt using an associated object 
+    [Subtask.associations.Task, 'createdAt', 'DESC'],
+    // Will order by a nested associated model's createdAt using association objects
+    [Subtask.associations.Task, Task.associations.Project, 'createdAt','DESC'],
+    // Will order by an associated model's createdAt using a simple association object 
+    [{model: Task, as: 'Task' }, 'createdAt', 'DESC'],
+    // Will order by a nested associated model's createdAt simple association objects 
+    [{model: Task, as: 'Task' }, { model: Project, as: 'Project' }, 'createdAt','DESC'],
+  ],
+  // Will order by max age descending
+  order: sequelize.literal('max(age) DESC'),
+  // Will order by max age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.fn('max',sequelize.col('age')),
+  // Will order by age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.col('age'),
+  // Will order randomly based on the dialect 
+  order: sequelize.random(),
+});
+
+Foo.findOne({
+  order: [
+    // will return 'name'
+    ['name'],
+    // will return 'username' DESC 
+    ['username','DESC'],
+    // will return max('age')
+    sequelize.fn('max',sequelize.col('age'))
+    // will return max('age') DESC 
+    [sequelize.fn('max',sequelize.col('age')),'DESC']
+    // will return otherfunction('col1',12,'lalala') DESC 
+    [sequelize.fn('otherfunction',sequelize.col('col1'),12,'lalala'),'DESC'],
+    // will return otherfunction(awesomefunction('col')) DESC, This nesting is potentially infinite!
+    [sequelize.fn('otherfunction',sequelize.fn('awesomefunction',sequelize.col('col'))), 'DESC'],
+  ],
+});
+
+11. Grouping 
+- Project.findAll({ group: 'name'});
+
+12. Limits and Pagination
+- // Fetch 10 instances/rows 
+  Project.findAll({limit: 10});
+  // Skip 8 instances/rows 
+  Project.findAll({offset: 8})
+  // Skip 5 instances and fetch the 5 after that 
+  Project.findAll({offset: 5, limit: 5})
+
+13. Utility Methods 
+- count 
+ console.log(`There are ${await Project.count() projects`})
+ const amount = await Project.count({
+  where: {
+    id: {
+      [Op.gt]: 25,
+    },
+  },
+ });
+ console.log(`There are ${amount} projects with an id greater than 25`);
+
+- max, min and sum  
+ await User.max('age');
+ await User.max('age',{ where: { age: { [Op.lt]: 20 } } });
+ await User.min('age');
+ await User.min('age',{ where: { age: { [Op.gt]: 5 } } });
+ await User.sum('age');
+ await User.sum('age',{ where: { age: { [Op.gt]: 5 } } });
+
+- increment, decrement 
+ await User.increment({ age: 5 }, { where: { id: 1 } });
+ await User.increment({ age: -5 }, { where: {id: 1 } });
